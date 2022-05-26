@@ -12,19 +12,28 @@ body {
 image-container {
 	position: relative;
 	transition: transform 0.2s;
-	width: 475px;
 }
 
 
-.overlay {
+.image-container{
+	width:475px;
+	top: 500px;
+	border: 10px red;
+}
+.gradient-custom{
+	background:linear-gradient(-120DEG, #E50914,#221F1F,#F5F5F1)
+}
+.button1{
+	width: 120px;
+	align-items: center;
+	height:50px
+}
+.search{
+	padding-top: 60px;
+	width: 30px;
+}
+.form-control1{
 	position: absolute;
-	background: rgba(0, 0, 0, 0.8);
-	width: 100%;
-	transition: 0.5s ease;
-	opacity: 0;
-	bottom: 0;
-	font-size: 20px;
-	padding: 20px;
-	text-align: center;
+	top:10px;
+	width: 300px;
 }
-

@@ -1,40 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import MovieList from './MovieList';
-import MovieListHeading from './MovieListHeading';
-import SearchBox from './SearchBox';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import { auth } from "./firebase-config";
+import {
+	createUserWithEmailAndPassword,
+	onAuthStateChanged,
+	signOut,
+	signInWithEmailAndPassword,
+} from "firebase/auth";
+import LogForm from "./Form";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	Navigate,
+	useNavigate,
+} from "react-router-dom";
+import Home from "./Home";
 
 const App = () => {
-	const [movies, setMovies] = useState([]);
-	const [searchValue, setSearchValue] = useState('');
-
-	const getMovieRequest = async (searchValue) => {
-		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=263d22d8`;
-
-		const response = await fetch(url);
-		const responseJson = await response.json();
-
-		if (responseJson.Search) {
-			setMovies(responseJson.Search);
-			console.log(movies);
-		}
-	};
-
-	useEffect(() => {
-		getMovieRequest(searchValue);
-	}, [searchValue]);
-
 	return (
-		<div className='container-fluid movie-app'>
-			<div className='row'>
-				<MovieListHeading heading='Netlify' />
-				<SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
+		<Router>
+			<div className="container-fluid movie-app">
+				<Routes>
+					<Route path="/login" element={<LogForm />} />
+					<Route path="/" element={<LogForm />} />
+					<Route path="/home" element={<Home />} />
+				</Routes>
 			</div>
-			<div className='row'>
-				<MovieList movies={movies} />
-			</div>
-		</div>
+		</Router>
 	);
 };
 
