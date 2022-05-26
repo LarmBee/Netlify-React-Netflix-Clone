@@ -15,17 +15,17 @@ function LandingPage() {
 				</video>
 			</div>
 			<div className="text1" style={{ position: "absolute", top: "170px",margin:'50px' }}>
-				<h3>SPIDERMAN-THE-COMPLETE-SERIES </h3>
+				<h2 className="font-base">SPIDERMAN-THE-COMPLETE-SERIES </h2>
 				<br/>
-				<h4>
+				<h6 className="font-base">
 					When bitten by a genetically modified spider,<br/> a nerdy, shy, and
 					awkward high school student <br/>gains spider-like abilities that he
 					eventually must <br/>use to fight evil as a superhero after tragedy befalls<br/>
 					his family. Based on Marvel Comics' superhero character,<br/> this is a
 					story of Peter Parker who is a nerdy high-schooler.
-				</h4>
+				</h6>
 				<br/>
-				<button>Watch Movie</button>
+				<button className="btn btn-info">Watch Movie</button>
 			</div>
 		</div>
 	);

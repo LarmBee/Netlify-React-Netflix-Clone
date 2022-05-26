@@ -16,7 +16,7 @@ import {
 	Navigate,
 	useNavigate,
 } from "react-router-dom";
-import Home from "./Home";
+import Home from "./Home"
 
 const App = () => {
 	return (

@@ -20,10 +20,15 @@ import {
 	Navigate,
 	useNavigate,
 } from "react-router-dom";
+import AddFavourites from './AddFavourites'
+import RemoveFavourites from "./RemoveFavourites";
+
 
 const Home = () => {
 	const [movies, setMovies] = useState([]);
 	const [searchValue, setSearchValue] = useState("");
+	const [favourites, setFavourites] = useState([]);
+
 	let navigate = useNavigate();
 
 
@@ -32,12 +37,24 @@ const Home = () => {
 
 		const response = await fetch(url);
 		const responseJson = await response.json();
+		console.log(responseJson);
 
 		if (responseJson.Search) {
 			setMovies(responseJson.Search);
 			console.log(movies);
 		}
 	};
+	const addFavouriteMovie=(movie)=>{
+		const newFavouriteList = [...favourites,movie];
+		setFavourites(newFavouriteList);
+	}
+
+	const removeFavouriteMovie=(movie)=>{
+		const newFavouriteList = favourites.filter(
+			(favourite)=>favourite.imdbID !== movie.imdbID
+		);
+		setFavourites(newFavouriteList);
+	}
 
 	useEffect(() => {
 		getMovieRequest(searchValue);
@@ -53,7 +70,7 @@ const Home = () => {
 	return (
 		<div className="container-fluid movie-app">
 			<div className="row">
-				<MovieListHeading heading="Netlify" />
+				<MovieListHeading className='base-font'  heading="Netlify" />
 				<SearchBox className="search" searchValue={searchValue} setSearchValue={setSearchValue} />
 				<button onClick={logout} className="button1 btn btn-danger" >
 					Logout
@@ -64,11 +81,18 @@ const Home = () => {
 			</div>
 			<br />
 			<h2>
-				<u>SEARCH RESULTS ...</u>
+				<u className="font-base">SEARCH RESULTS ...</u>
 			</h2>
 			<br />
 			<div className="row">
-				<MovieList movies={movies} />
+				<MovieList movies={movies} favouriteComponent={AddFavourites} handleFavouritesClick={addFavouriteMovie}/>
+			</div>
+			<h2><u className="font-base">FAVOURITES ..</u></h2>
+			<div className='row d-flex align-items-center mt-4 mb-4'>
+				<MovieListHeading  />
+			</div>
+			<div className='row'>
+				<MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites}/>
 			</div>
 		</div>
 	);
