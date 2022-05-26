@@ -20,9 +20,8 @@ import {
 	Navigate,
 	useNavigate,
 } from "react-router-dom";
-import AddFavourites from './AddFavourites'
+import AddFavourites from "./AddFavourites";
 import RemoveFavourites from "./RemoveFavourites";
-
 
 const Home = () => {
 	const [movies, setMovies] = useState([]);
@@ -31,9 +30,8 @@ const Home = () => {
 
 	let navigate = useNavigate();
 
-
 	const getMovieRequest = async (searchValue) => {
-		const url = `http://www.omdbapi.com/?s=${searchValue}&apikey=263d22d8`;
+		const url = `https://www.omdbapi.com/?s=${searchValue}&apikey=263d22d8`;
 
 		const response = await fetch(url);
 		const responseJson = await response.json();
@@ -44,35 +42,38 @@ const Home = () => {
 			console.log(movies);
 		}
 	};
-	const addFavouriteMovie=(movie)=>{
-		const newFavouriteList = [...favourites,movie];
+	const addFavouriteMovie = (movie) => {
+		const newFavouriteList = [...favourites, movie];
 		setFavourites(newFavouriteList);
-	}
+	};
 
-	const removeFavouriteMovie=(movie)=>{
+	const removeFavouriteMovie = (movie) => {
 		const newFavouriteList = favourites.filter(
-			(favourite)=>favourite.imdbID !== movie.imdbID
+			(favourite) => favourite.imdbID !== movie.imdbID
 		);
 		setFavourites(newFavouriteList);
-	}
+	};
 
 	useEffect(() => {
 		getMovieRequest(searchValue);
 	}, [searchValue]);
 
-    const logout = async (e) => {
+	const logout = async (e) => {
 		e.preventDefault();
 		await signOut(auth);
-		navigate('/login')
-
+		navigate("/login");
 	};
 
 	return (
 		<div className="container-fluid movie-app">
 			<div className="row">
-				<MovieListHeading className='base-font'  heading="Netlify" />
-				<SearchBox className="search" searchValue={searchValue} setSearchValue={setSearchValue} />
-				<button onClick={logout} className="button1 btn btn-danger" >
+				<MovieListHeading className="base-font" heading="Netlify" />
+				<SearchBox
+					className="search"
+					searchValue={searchValue}
+					setSearchValue={setSearchValue}
+				/>
+				<button onClick={logout} className="button1 btn btn-danger">
 					Logout
 				</button>
 			</div>
@@ -85,14 +86,24 @@ const Home = () => {
 			</h2>
 			<br />
 			<div className="row">
-				<MovieList movies={movies} favouriteComponent={AddFavourites} handleFavouritesClick={addFavouriteMovie}/>
+				<MovieList
+					movies={movies}
+					favouriteComponent={AddFavourites}
+					handleFavouritesClick={addFavouriteMovie}
+				/>
 			</div>
-			<h2><u className="font-base">FAVOURITES ..</u></h2>
-			<div className='row d-flex align-items-center mt-4 mb-4'>
-				<MovieListHeading  />
+			<h2>
+				<u className="font-base">FAVOURITES ..</u>
+			</h2>
+			<div className="row d-flex align-items-center mt-4 mb-4">
+				<MovieListHeading />
 			</div>
-			<div className='row'>
-				<MovieList movies={favourites} handleFavouritesClick={removeFavouriteMovie} favouriteComponent={RemoveFavourites}/>
+			<div className="row">
+				<MovieList
+					movies={favourites}
+					handleFavouritesClick={removeFavouriteMovie}
+					favouriteComponent={RemoveFavourites}
+				/>
 			</div>
 		</div>
 	);
